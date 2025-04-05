@@ -1,7 +1,8 @@
 # UAI 2025 Xunye Rebuttal
 
-
 ## Reviewer faca (Rating 4, Confidence 2)
+
+Thanks for your valuable time to provide insightful feedbacks, and we will respond to the following concerns that worries you accordingly.
 
 **Weakness 1:**
 
@@ -9,7 +10,7 @@
 
 **Response 1:**
 
-
+Since we are conducting the permutation test on the learned representations, it can **guarantee the validity of the Type-I error rate under exchangeability conditions**. Our autoencoder-based feature map is learned in an unsupervised manner, independent of the sample labels. Hence, the learned nonlinear transformation applies symmetrically to both samples. This symmetry preserves the exchangeability required for the permutation test, ensuring valid control of Type-I error regardless of nonlinear transformations. 
 
 **Weakness 2:**
 
@@ -17,7 +18,9 @@
 
 **Response 2:**
 
+**Motivation:** Our main novelty lies in the proposed **general framework** (RL-TST), which flexibly integrates inherent representations (IRs, learned unsupervised from unlabeled test data) and discriminative representations (DRs), surpassing limitations of existing purely unsupervised or purely supervised representation learning approaches. Additionally, we highlight that the **framework itself is flexible**: beyond autoencoders, other unsupervised or semi-supervised representation learning approaches could be utilized (in Table 2), as long as the data strictly follow the assumptions of methods (e.g., smoothness or cluster assumptions in semi-supervised learning). 
 
+**Theoretical contribution:** Theoretically, our approach **reduces the effective hypothesis space** for feature extraction in learning DR, enhancing the likelihood of finding optimal discriminative representations. Although the it is a black-box framework and the specific Type-I error control formally depends on downstream DR learning methods, our framework **does not negatively affect the exchangeability**.
 
 **Weakness 3:**
 
@@ -25,7 +28,7 @@
 
 **Response 3:**
 
-
+We acknowledge the reviewer’s concern that our proposed RL-TST framework requires multiple stages (learning inherent representations, followed by discriminative feature learning). However, the extra IR pre-training step is **computationally manageable**, since it is performed in an unsupervised manner and can be efficiently executed offline. Moreover, By first pre-training inherent representations, the subsequent discriminative representation learning step usually converges **faster and more robustly**. Thus, the extra computational effort in the initial IR step is partially offset by faster convergence and reduced training epochs needed in later stages. In practical, fine-tuning a pre-trained encoder in IR learning step would have higher performance and efficiency in subsequent DR learning.
 
 **Weakness 4:**
 
@@ -33,6 +36,21 @@
 
 **Response 4:**
 
+We sincerely thank the reviewer for raising this point. We want to clarify that we indeed analyze and report **Type-II error** in our experiments. As in the context of two-sample testing, the test power is defined as (1 - Type-II error). We will explicitly clarify this equivalence in the manuscript.
+
+Moreover, we emphasize the standard theoretical result in non-parametric kernel two-sample testing (**consistency**): Under mild assumptions (such as characteristic kernels for MMD or appropriately flexible classifiers), the test power converges to 1 as the sample size increases, formally ensuring:
+$$
+\begin{align*}
+\lim_{n\rightarrow\infin}\text{Power}(n) = 1, \text{given} \; \mathbb{P} \neq \mathbb{Q}.
+\end{align*}
+$$
+Lastly, we agree that explicitly discussing potential conditions under which RL-TST may face challenges (e.g., misspecified manifolds, extreme noise levels) is valuable. We will clarify that our data assumptions follow the setting of only the mainstream non-parametric two-sample testing literatures [1,2,3,4,5,6]. 
+
+[1]. Arthur Gretton, Karsten M Borgwardt, Malte J. Rasch, Bernhard Schölkopf, and Alexander J. Smola. A kernel two-sample test. Journal of Machine Learning Research, 13:723–773, 2012a.
+[2]. David Lopez-Paz and Maxime Oquab. Revisiting classifier two-sample tests. In ICLR, 2017.
+[3]. Feng Liu, Wenkai Xu, Jie Lu, Guangquan Zhang, Arthur Gretton, and Danica J. Sutherland. Learning deep kernels for non-parametric two-sample tests. In ICML, 2020
+[4]. Antonin Schrab, Ilmun Kim, Melisande Albert, Beatrice Laurent, Benjamin Guedj, and Arthur Gretton. MMD Aggregated Two-Sample Test. Journal of Machine Learning Research, 2023.
+[5]. Felix Biggs, Antonin Schrab, and Arthur Gretton. MMDFUSE: Learning and Combining Kernels for Two-Sample Testing Without Data Splitting. In NeurIPS, 2023.
 
 
 ## Reviewer Qgpm (Rating 5, Confidence 3)
@@ -83,11 +101,11 @@
 
 >  I would suggest to add a discussion on how to optimally choose the subsample sizes. (I know it is mentioned in the supplementary, but in light of my remark on the theoretical assumptions, it would require some further discussion).
 >
-> I would change section 3.2. as a remark, and I haven't seen any typo.
+>  I would change section 3.2. as a remark, and I haven't seen any typo.
 >
-> Lastly, causal discovery mainly uses conditional independence testing (in the introduction paragraph 2).
+>  Lastly, causal discovery mainly uses conditional independence testing (in the introduction paragraph 2).
 >
-> Some references are missing in the literature for two sample testing, e.g., Biau Gyorfi 2005, Deb and Sen 2019, Clemencon Limnios and Vacates (2023), Bach Moulines and Harchaoui (2008).
+>  Some references are missing in the literature for two sample testing, e.g., Biau Gyorfi 2005, Deb and Sen 2019, Clemencon Limnios and Vacates (2023), Bach Moulines and Harchaoui (2008).
 
 **Response to review:** 
 
